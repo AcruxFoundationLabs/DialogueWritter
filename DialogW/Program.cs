@@ -150,7 +150,7 @@ public static class FileReaderService
             currentIndex += increment;
             contentSlice += fullText.Substring(previousIndex, currentIndex - previousIndex);
             writter.UpdateContent(contentSlice);
-            await Task.Delay(500); // Use await instead of Task.Delay
+            await Task.Delay(500);
         }
 
         // Mark the entire dialogue and last paragraph as completed.
@@ -164,17 +164,9 @@ public static class FileReaderService
 
 public static class Program
 {
-    public static void Main()
+    public static async Task Main()
     {
         Dialogue dialogue = new Dialogue();
-        Task task = FileReaderService.DoAsync(dialogue);
-
-        Console.WriteLine("\nDOING SOMETHING ELSE");
-        while(!task.IsCompleted)
-        {
-            Thread.Sleep(1000);
-        }
-
-        Console.WriteLine("END");
+        await FileReaderService.DoAsync(dialogue);
     }
 }
