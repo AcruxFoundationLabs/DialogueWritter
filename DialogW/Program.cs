@@ -9,6 +9,7 @@ public static class FileReaderService
         writter.ActiveDialogue = dialogue;
         writter.OnParagraphFinalized += (Paragraph paragraph, string paragraphContent) =>
         {
+            Console.WriteLine("\n= SENTENCES =");
             foreach (string block in SentenceSplitter.SplitParagraph(paragraphContent))
             {
                 Console.WriteLine($" >> {block}");
@@ -34,7 +35,6 @@ public static class FileReaderService
         writter.FinalizeWritting();
         
         Console.WriteLine();
-
         Console.WriteLine(writter.ActiveDialogue);
     }
 }
