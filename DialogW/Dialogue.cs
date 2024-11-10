@@ -1,7 +1,7 @@
 ﻿public class Dialogue
 {
     public bool IsCompleted { get; private set; }
-    public List<Paragraph> Paragraphs { get; set; } = [];
+    public List<Paragraph> Paragraphs { get; private set; } = [];
 
     public void MarkAsCompleted()
     {

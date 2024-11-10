@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DialogW;
+using System;
 
 public static class FileReaderService
 {
@@ -6,6 +7,14 @@ public static class FileReaderService
     {
         DialogueWritter writter = new DialogueWritter();
         writter.ActiveDialogue = dialogue;
+        writter.OnParagraphFinalized += (Paragraph paragraph, string paragraphContent) =>
+        {
+            foreach (string block in SentenceSplitter.SplitParagraph(paragraphContent))
+            {
+                Console.WriteLine($" >> {block}");
+                paragraph.Sentences.Add(block);
+            }
+        };
 
         string fullText = File.ReadAllText("text.txt").Replace("\r\n", "\n");
         string contentSlice = "";
@@ -22,10 +31,8 @@ public static class FileReaderService
             writter.UpdateContent(contentSlice);
             await Task.Delay(500);
         }
-
-        // Mark the entire dialogue and last paragraph as completed.
-        writter.ActiveDialogue.MarkAsCompleted();
-        writter.ActiveDialogue.Paragraphs.Last().MarkAsCompleted();
+        writter.FinalizeWritting();
+        
         Console.WriteLine();
 
         Console.WriteLine(writter.ActiveDialogue);
