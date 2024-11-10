@@ -19,7 +19,7 @@ namespace DialogW
 			regex = new Regex(PATTERN, RegexOptions.IgnorePatternWhitespace);
 		}
 
-		public static string[] SplitParagraph(string paragraph)
+		public static string[] SplitIntoSentences(string paragraph)
 		{
 			return regex
 				.Split(paragraph)

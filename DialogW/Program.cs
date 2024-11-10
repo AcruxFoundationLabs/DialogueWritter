@@ -10,7 +10,7 @@ public static class FileReaderService
         writter.OnParagraphFinalized += (Paragraph paragraph, string paragraphContent) =>
         {
             Console.WriteLine("\n= SENTENCES =");
-            foreach (string block in SentenceSplitter.SplitParagraph(paragraphContent))
+            foreach (string block in SentenceSplitter.SplitIntoSentences(paragraphContent))
             {
                 Console.WriteLine($" >> {block}");
                 paragraph.Sentences.Add(block);
