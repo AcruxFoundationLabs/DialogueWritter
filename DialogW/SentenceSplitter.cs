@@ -8,7 +8,6 @@ namespace DialogW
 		private const string PATTERN =
 			@"(?<!\b(?:Mr|Mrs|Ms|Dr|St|Jr|Sr|vs|etc|i\.e|e\.g))   # Avoid split after common abbreviations
 			  (?<!\b[A-Z]\.)                                      # Avoid split after initials (e.g., 'J. K. Rowling')
-			  (?<!\.\.\.)                                         # Avoid split after ellipses
 			  (?<=\.|\?|!)                                        # Ensure the sentence ends with '.', '?' or '!'
 			  (?=\s+[A-Z])                                        # Followed by whitespace and a capital letter";
 
