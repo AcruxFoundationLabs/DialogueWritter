@@ -1,4 +1,5 @@
-﻿
+﻿using DialogW.Events;
+
 /// <summary>
 /// Modifies a <see cref="Dialogue"/>'s instance by calling <see cref="UpdateContent(string)"/>
 /// where <c>newContent</c> starts with the last given one <br></br>
@@ -22,6 +23,11 @@ public class DialogueWritter
     /// The <see cref="Dialogue"/> being handled by this <see cref="DialogueWritter"/>.
     /// </summary>
     public Dialogue ActiveDialogue { get; set; } = new Dialogue();
+
+    /// <summary>
+    /// Invoked everytime a paragraph is finalized.
+    /// </summary>
+    public event ParagraphFinalizedEventHandler? OnParagraphFinalized;
 
     /// <summary>
     /// Modifies this <see cref="ActiveDialogue"/> via the given <paramref name="newContent"/>.<br></br><br></br>
@@ -62,7 +68,9 @@ public class DialogueWritter
         {
             if (ActiveDialogue.Paragraphs.Count > 0)
             {
-                ActiveDialogue.Paragraphs[i - 1].MarkAsCompleted();
+                Paragraph paragraphToMark = ActiveDialogue.Paragraphs[i - 1];
+				paragraphToMark.MarkAsCompleted();
+                OnParagraphFinalized?.Invoke(paragraphToMark, paragraphToMark.Content);
             }
             Paragraph newParagraph = new Paragraph(newParagraphs[i]);
             ActiveDialogue.Paragraphs.Add(newParagraph);
@@ -71,4 +79,19 @@ public class DialogueWritter
         CurrentParagraphs = newParagraphs;
         Content = newContent;
     }
+
+    /// <summary>
+    /// This should be called after ensuring <see cref="UpdateContent"/> will not be called again. <br></br>
+    /// This function helps mark the remaining <see cref="Paragraph"/> and the <see cref="ActiveDialogue"/> as completed.
+    /// </summary>
+    public void FinalizeWritting()
+    {
+        //Mark remaining paragraph as completed
+        Paragraph remainingParagraph = ActiveDialogue.Paragraphs.Last();
+		remainingParagraph.MarkAsCompleted();
+		OnParagraphFinalized?.Invoke(remainingParagraph, remainingParagraph.Content);
+
+        //Mark dialogue as completed.
+		ActiveDialogue.MarkAsCompleted();
+	}
 }

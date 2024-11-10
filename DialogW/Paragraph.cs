@@ -2,6 +2,7 @@
 {
     public bool IsCompleted { get; private set; }
     public string Content { get; set; } = "";
+    public List<string> Sentences { get; private set; } = [];
 
     public Paragraph(string initialContent)
     {
