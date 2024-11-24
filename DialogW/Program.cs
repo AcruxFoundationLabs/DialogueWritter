@@ -7,7 +7,7 @@ public static class FileReaderService
     {
         DialogueWritter writter = new DialogueWritter();
         writter.ActiveDialogue = dialogue;
-        writter.OnParagraphFinalized += (Paragraph paragraph, string paragraphContent) =>
+        writter.OnParagraphFinalized += (Paragraph paragraph) =>
         {
             Console.WriteLine("\n\t= SENTENCES =");
             foreach (string sentence in paragraph.Sentences)

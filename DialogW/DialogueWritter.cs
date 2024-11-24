@@ -70,7 +70,7 @@ public class DialogueWritter
             {
                 Paragraph paragraphToMark = ActiveDialogue.Paragraphs[i - 1];
 				paragraphToMark.MarkAsCompleted();
-                OnParagraphFinalized?.Invoke(paragraphToMark, paragraphToMark.Content);
+                OnParagraphFinalized?.Invoke(paragraphToMark);
             }
             Paragraph newParagraph = new Paragraph(newParagraphs[i]);
             ActiveDialogue.Paragraphs.Add(newParagraph);
@@ -89,7 +89,7 @@ public class DialogueWritter
         //Mark remaining paragraph as completed
         Paragraph remainingParagraph = ActiveDialogue.Paragraphs.Last();
 		remainingParagraph.MarkAsCompleted();
-		OnParagraphFinalized?.Invoke(remainingParagraph, remainingParagraph.Content);
+		OnParagraphFinalized?.Invoke(remainingParagraph);
 
         //Mark dialogue as completed.
 		ActiveDialogue.MarkAsCompleted();
