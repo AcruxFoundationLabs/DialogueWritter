@@ -1,4 +1,6 @@
-﻿public class Paragraph
+﻿using DialogW;
+
+public class Paragraph
 {
     public bool IsCompleted { get; private set; }
     public string Content { get; set; } = "";
@@ -20,7 +22,8 @@
     public void AppendToContent(string additionalContent)
     {
         Content += additionalContent;
-        Console.Write(additionalContent);
+        Sentences = SentenceSplitter.SplitIntoSentences(Content).ToList();
+		Console.Write(additionalContent);
     }
 
     public override string ToString()
