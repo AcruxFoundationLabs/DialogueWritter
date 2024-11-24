@@ -9,10 +9,10 @@ public static class FileReaderService
         writter.ActiveDialogue = dialogue;
         writter.OnParagraphFinalized += (Paragraph paragraph, string paragraphContent) =>
         {
-            Console.WriteLine("\n= SENTENCES =");
+            Console.WriteLine("\n\t= SENTENCES =");
             foreach (string block in SentenceSplitter.SplitIntoSentences(paragraphContent))
             {
-                Console.WriteLine($" >> {block}");
+                Console.WriteLine($"\t>> {block}");
                 paragraph.Sentences.Add(block);
             }
         };
@@ -25,12 +25,13 @@ public static class FileReaderService
         while (contentSlice != fullText)
         {
             int previousIndex = currentIndex;
-            int increment = (random.Next(fullText.Length - currentIndex + 1) / 2);
+            //int increment = (random.Next(fullText.Length - currentIndex + 1) / 2);
+            int increment = 1;
             increment = (increment == 0) ? 1 : increment;
             currentIndex += increment;
             contentSlice += fullText.Substring(previousIndex, currentIndex - previousIndex);
             writter.UpdateContent(contentSlice);
-            await Task.Delay(500);
+            await Task.Delay(2);
         }
         writter.FinalizeWritting();
         
