@@ -15,7 +15,7 @@ public static class FileReaderService
         {
             textSlice += fullText[i];
 			writter.UpdateContent(textSlice);
-			await Task.Delay(2);
+			await Task.Delay(20);
 		}
 		writter.FinalizeWritting();
 
