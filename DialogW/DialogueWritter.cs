@@ -1,4 +1,5 @@
-﻿using DialogW.Events;
+﻿using DialogW;
+using DialogW.Events;
 
 /// <summary>
 /// Modifies a <see cref="Dialogue"/>'s instance by calling <see cref="UpdateContent(string)"/>
@@ -50,7 +51,7 @@ public class DialogueWritter
         }
 
         // Split content into paragraphs.
-        string[] newParagraphs = newContent.Split(new[] { "\n\n" }, StringSplitOptions.None);
+        string[] newParagraphs = SentenceSplitter.SplitIntoSentences(newContent);
 
         // Update existing paragraphs if content is modified.
         for (int i = 0; i < CurrentParagraphs.Length; ++i)

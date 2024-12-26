@@ -4,11 +4,10 @@ public class Paragraph
 {
     public bool IsCompleted { get; private set; }
     public string Content { get; set; } = "";
-    public List<string> Sentences { get; private set; } = [];
 
     public Paragraph(string initialContent)
     {
-        Console.WriteLine("\n\n== NEW PARAGRAPH ==");
+        Console.WriteLine("\n=== NEW PARAGRAPH ===");
         Content = initialContent;
         Console.Write(initialContent);
     }
@@ -22,7 +21,6 @@ public class Paragraph
     public void AppendToContent(string additionalContent)
     {
         Content += additionalContent;
-        Sentences = SentenceSplitter.SplitIntoSentences(Content).ToList();
 		Console.Write(additionalContent);
     }
 

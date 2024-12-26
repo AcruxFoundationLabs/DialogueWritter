@@ -7,14 +7,7 @@ public static class FileReaderService
     {
         DialogueWritter writter = new DialogueWritter();
         writter.ActiveDialogue = dialogue;
-        writter.OnParagraphFinalized += (Paragraph paragraph) =>
-        {
-            Console.WriteLine("\n\t= SENTENCES =");
-            foreach (string sentence in paragraph.Sentences)
-            {
-                Console.WriteLine($"\t>> {sentence}");
-            }
-        };
+        writter.OnParagraphFinalized += (Paragraph paragraph) => { };
 
         string fullText = File.ReadAllText("text.txt").Replace("\r\n", "\n");
         string textSlice = "";
@@ -26,7 +19,7 @@ public static class FileReaderService
 		}
 		writter.FinalizeWritting();
 
-		Console.WriteLine();
+		Console.WriteLine("\n\n");
 		Console.WriteLine(writter.ActiveDialogue);
     }
 }
