@@ -38,13 +38,6 @@ public class DialogueWritter
     /// <exception cref="ArgumentException"></exception>
     public void UpdateContent(string newContent)
     {
-        if (newContent.Length > 0 && newContent.EndsWith("\n") && !newContent.EndsWith("\n\n"))
-        {
-            return; // Handle single newline as paragraph continuation.
-        }
-
-        /* Ignore cases where theres a '\n' at the end of the `newContent`
-         * because it may actually be part of a "\n\n" (Paragraph terminator) */
         if (Content != null && !newContent.StartsWith(Content))
         {
             throw new ArgumentException($"The provided {nameof(newContent)} should be an extension of the previously given content.", nameof(newContent));
