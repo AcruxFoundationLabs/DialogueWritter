@@ -1,4 +1,4 @@
-﻿using DialogW;
+﻿namespace Acrux.Dialoguing;
 
 public class Sentence
 {
@@ -21,7 +21,7 @@ public class Sentence
     public void AppendToContent(string additionalContent)
     {
         Content += additionalContent;
-		Console.Write(additionalContent);
+        Console.Write(additionalContent);
     }
 
     public override string ToString()

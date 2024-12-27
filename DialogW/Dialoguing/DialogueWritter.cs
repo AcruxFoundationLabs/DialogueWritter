@@ -1,5 +1,5 @@
-﻿using DialogW;
-using DialogW.Events;
+﻿using Acrux.Dialoguing.Events;
+namespace Acrux.Dialoguing;
 
 /// <summary>
 /// Modifies a <see cref="Dialogue"/>'s instance by calling <see cref="UpdateContent(string)"/>
@@ -63,7 +63,7 @@ public class DialogueWritter
             if (ActiveDialogue.Sentences.Count > 0)
             {
                 Sentence sentenceToMark = ActiveDialogue.Sentences[i - 1];
-				sentenceToMark.MarkAsCompleted();
+                sentenceToMark.MarkAsCompleted();
                 OnSentenceFinalized?.Invoke(sentenceToMark);
             }
             ActiveDialogue.Sentences.Add(new Sentence(newSentences[i]));
@@ -81,10 +81,10 @@ public class DialogueWritter
     {
         //Mark remaining sentences as completed
         Sentence remainingSentence = ActiveDialogue.Sentences.Last();
-		remainingSentence.MarkAsCompleted();
-		OnSentenceFinalized?.Invoke(remainingSentence);
+        remainingSentence.MarkAsCompleted();
+        OnSentenceFinalized?.Invoke(remainingSentence);
 
         //Mark dialogue as completed.
-		ActiveDialogue.MarkAsCompleted();
-	}
+        ActiveDialogue.MarkAsCompleted();
+    }
 }

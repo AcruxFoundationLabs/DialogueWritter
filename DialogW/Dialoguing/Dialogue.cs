@@ -1,4 +1,6 @@
-﻿public class Dialogue
+﻿namespace Acrux.Dialoguing;
+
+public class Dialogue
 {
     public bool IsCompleted { get; private set; }
     public List<Sentence> Sentences { get; private set; } = [];

@@ -1,7 +1,6 @@
-﻿using DialogW;
-using System;
+﻿using Acrux.Dialoguing;
 
-public static class FileReaderService
+internal static class FileReaderService
 {
     public static async Task DoAsync(Dialogue dialogue)
     {
@@ -9,7 +8,7 @@ public static class FileReaderService
         writter.ActiveDialogue = dialogue;
         writter.OnSentenceFinalized += (Sentence sentence) => { };
 
-        string fullText = File.ReadAllText("text.txt").Replace("\r\n", "\n");
+        string fullText = File.ReadAllText("Testing/text.txt").Replace("\r\n", "\n");
         string textSlice = "";
         for(int i = 0; i < fullText.Length; ++i)
         {
@@ -24,7 +23,7 @@ public static class FileReaderService
     }
 }
 
-public static class Program
+internal static class Program
 {
     public static async Task Main()
     {
