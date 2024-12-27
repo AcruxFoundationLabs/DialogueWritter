@@ -27,7 +27,7 @@ public class Sentence
     public override string ToString()
     {
         string state = IsCompleted ? "Completed" : "In Progress";
-        string output = $"[PARAGRAPH | {state}]\n{Content}";
+        string output = $"[SENTENCE | {state}]\n{Content}";
         return output;
     }
 }
