@@ -10,10 +10,10 @@ using DialogW.Events;
 public class DialogueWritter
 {
     /// <summary>
-    /// Contains the computed paragraphs from the last given <c>newContent</c> argument
+    /// Contains the computed sentences from the last given <c>newContent</c> argument
     /// in the <see cref="UpdateContent(string)"/> method.
     /// </summary>
-    private string[] CurrentParagraphs { get; set; } = Array.Empty<string>();
+    private string[] CurrentSentences { get; set; } = Array.Empty<string>();
 
     /// <summary>
     /// Contains the last given <c>newContent</c> argument in the <see cref="UpdateContent(string)"/> method.
@@ -26,9 +26,9 @@ public class DialogueWritter
     public Dialogue ActiveDialogue { get; set; } = new Dialogue();
 
     /// <summary>
-    /// Invoked everytime a paragraph is finalized.
+    /// Invoked everytime a sentence is finalized.
     /// </summary>
-    public event ParagraphFinalizedEventHandler? OnParagraphFinalized;
+    public event SentenceFinalizedEventHandler? OnSentenceFinalized;
 
     /// <summary>
     /// Modifies this <see cref="ActiveDialogue"/> via the given <paramref name="newContent"/>.<br></br><br></br>
@@ -43,47 +43,46 @@ public class DialogueWritter
             throw new ArgumentException($"The provided {nameof(newContent)} should be an extension of the previously given content.", nameof(newContent));
         }
 
-        // Split content into paragraphs.
-        string[] newParagraphs = SentenceSplitter.SplitIntoSentences(newContent);
+        // Split content into sentences.
+        string[] newSentences = DialogueSplitter.SplitIntoSentences(newContent);
 
-        // Update existing paragraphs if content is modified.
-        for (int i = 0; i < CurrentParagraphs.Length; ++i)
+        // Update existing sentences if content is modified.
+        for (int i = 0; i < CurrentSentences.Length; ++i)
         {
-            bool isParagraphModified = CurrentParagraphs[i] != newParagraphs[i];
-            if (isParagraphModified)
+            bool isSentenceModified = CurrentSentences[i] != newSentences[i];
+            if (isSentenceModified)
             {
-                int modifiedIndex = CurrentParagraphs[i].Length;
-                ActiveDialogue.Paragraphs[i].AppendToContent(newParagraphs[i].Substring(modifiedIndex));
+                int modifiedIndex = CurrentSentences[i].Length;
+                ActiveDialogue.Sentences[i].AppendToContent(newSentences[i].Substring(modifiedIndex));
             }
         }
 
-        // Handle newly added paragraphs.
-        for (int i = CurrentParagraphs.Length; i < newParagraphs.Length; ++i)
+        // Handle newly added sentences.
+        for (int i = CurrentSentences.Length; i < newSentences.Length; ++i)
         {
-            if (ActiveDialogue.Paragraphs.Count > 0)
+            if (ActiveDialogue.Sentences.Count > 0)
             {
-                Paragraph paragraphToMark = ActiveDialogue.Paragraphs[i - 1];
-				paragraphToMark.MarkAsCompleted();
-                OnParagraphFinalized?.Invoke(paragraphToMark);
+                Sentence sentenceToMark = ActiveDialogue.Sentences[i - 1];
+				sentenceToMark.MarkAsCompleted();
+                OnSentenceFinalized?.Invoke(sentenceToMark);
             }
-            Paragraph newParagraph = new Paragraph(newParagraphs[i]);
-            ActiveDialogue.Paragraphs.Add(newParagraph);
+            ActiveDialogue.Sentences.Add(new Sentence(newSentences[i]));
         }
 
-        CurrentParagraphs = newParagraphs;
+        CurrentSentences = newSentences;
         Content = newContent;
     }
 
     /// <summary>
     /// This should be called after ensuring <see cref="UpdateContent"/> will not be called again. <br></br>
-    /// This function helps mark the remaining <see cref="Paragraph"/> and the <see cref="ActiveDialogue"/> as completed.
+    /// This function helps mark the remaining <see cref="Sentence"/>s and the <see cref="ActiveDialogue"/> as completed.
     /// </summary>
     public void FinalizeWritting()
     {
-        //Mark remaining paragraph as completed
-        Paragraph remainingParagraph = ActiveDialogue.Paragraphs.Last();
-		remainingParagraph.MarkAsCompleted();
-		OnParagraphFinalized?.Invoke(remainingParagraph);
+        //Mark remaining sentences as completed
+        Sentence remainingSentence = ActiveDialogue.Sentences.Last();
+		remainingSentence.MarkAsCompleted();
+		OnSentenceFinalized?.Invoke(remainingSentence);
 
         //Mark dialogue as completed.
 		ActiveDialogue.MarkAsCompleted();

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace DialogW.Events
 {
-	public delegate void ParagraphFinalizedEventHandler(Paragraph paragraph);
+	public delegate void SentenceFinalizedEventHandler(Sentence sentence);
 }

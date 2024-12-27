@@ -1,7 +1,7 @@
 ﻿public class Dialogue
 {
     public bool IsCompleted { get; private set; }
-    public List<Paragraph> Paragraphs { get; private set; } = [];
+    public List<Sentence> Sentences { get; private set; } = [];
 
     public void MarkAsCompleted()
     {
@@ -13,9 +13,9 @@
         string dialogueState = IsCompleted ? "Completed" : "In Progress";
         string output = $"[DIALOGUE | {dialogueState}]\n";
 
-        foreach (Paragraph paragraph in Paragraphs)
+        foreach (Sentence sentence in Sentences)
         {
-            output += $"{paragraph}\n\n";
+            output += $"{sentence}\n\n";
         }
 
         return output;

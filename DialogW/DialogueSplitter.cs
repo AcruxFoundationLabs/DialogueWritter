@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace DialogW
 {
-	public static class SentenceSplitter
+	public static class DialogueSplitter
 	{
 		private const string PATTERN =
 			@"(?<!\b(?:Mr|Mrs|Ms|Dr|St|Jr|Sr|vs|etc|i\.e|e\.g))   # Avoid split after common abbreviations
@@ -14,16 +14,16 @@ namespace DialogW
 
 		private readonly static Regex regex;
 
-		static SentenceSplitter()
+		static DialogueSplitter()
 		{
 			// Initialize the regex with IgnorePatternWhitespace to support comments and spacing in the pattern
 			regex = new Regex(PATTERN, RegexOptions.IgnorePatternWhitespace);
 		}
 
-		public static string[] SplitIntoSentences(string paragraph)
+		public static string[] SplitIntoSentences(string dialogue)
 		{
 			return regex
-				.Split(paragraph)
+				.Split(dialogue)
 				.Select(sentence => sentence.Trim())
 				.ToArray();
 		}

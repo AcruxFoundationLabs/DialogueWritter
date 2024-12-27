@@ -7,7 +7,7 @@ public static class FileReaderService
     {
         DialogueWritter writter = new DialogueWritter();
         writter.ActiveDialogue = dialogue;
-        writter.OnParagraphFinalized += (Paragraph paragraph) => { };
+        writter.OnSentenceFinalized += (Sentence sentence) => { };
 
         string fullText = File.ReadAllText("text.txt").Replace("\r\n", "\n");
         string textSlice = "";

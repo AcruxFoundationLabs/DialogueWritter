@@ -1,13 +1,13 @@
 ﻿using DialogW;
 
-public class Paragraph
+public class Sentence
 {
     public bool IsCompleted { get; private set; }
     public string Content { get; set; } = "";
 
-    public Paragraph(string initialContent)
+    public Sentence(string initialContent)
     {
-        Console.WriteLine("\n=== NEW PARAGRAPH ===");
+        Console.WriteLine("\n=== NEW SENTENCE ===");
         Content = initialContent;
         Console.Write(initialContent);
     }
@@ -15,7 +15,7 @@ public class Paragraph
     public void MarkAsCompleted()
     {
         IsCompleted = true;
-        Console.WriteLine("\n=== PARAGRAPH COMPLETED ===");
+        Console.WriteLine("\n=== SENTENCE COMPLETED ===");
     }
 
     public void AppendToContent(string additionalContent)
@@ -26,8 +26,8 @@ public class Paragraph
 
     public override string ToString()
     {
-        string paragraphState = IsCompleted ? "Completed" : "In Progress";
-        string output = $"[PARAGRAPH | {paragraphState}]\n{Content}";
+        string state = IsCompleted ? "Completed" : "In Progress";
+        string output = $"[PARAGRAPH | {state}]\n{Content}";
         return output;
     }
 }
