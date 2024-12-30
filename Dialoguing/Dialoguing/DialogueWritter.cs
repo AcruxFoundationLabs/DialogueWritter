@@ -79,10 +79,13 @@ public class DialogueWritter
     /// </summary>
     public void FinalizeWritting()
     {
-        //Mark remaining sentences as completed
-        Sentence remainingSentence = ActiveDialogue.Sentences.Last();
-        remainingSentence.MarkAsCompleted();
-        OnSentenceFinalized?.Invoke(remainingSentence);
+        //Mark remaining sentence as completed
+        if (ActiveDialogue.Sentences.Count != 0)
+        {
+            Sentence remainingSentence = ActiveDialogue.Sentences.Last();
+            remainingSentence.MarkAsCompleted();
+            OnSentenceFinalized?.Invoke(remainingSentence);
+        }
 
         //Mark dialogue as completed.
         ActiveDialogue.MarkAsCompleted();
