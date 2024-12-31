@@ -15,6 +15,52 @@ public class Dialogue
 	}
 	#endregion
 
+	#region Traverse
+	public int CurrentSentenceIndex { get; private set; } = -1;
+	public Sentence CurrentSentence => _Sentences[CurrentSentenceIndex];
+
+	/// <summary>
+	/// Whether the <see cref="CurrentSentence"/> represents the
+	/// final <see cref="Sentence"/> of this <see cref="Dialogue"/>.
+	/// <para>If the dialogue is not completed, returns <see langword="false"/>.</para>
+	/// </summary>
+	public bool IsCurrentSentenceFinal =>
+		CurrentSentenceIndex == _Sentences.Count-1 &&
+		IsCompleted;
+
+	/// <summary>
+	/// Wheter there's a <see cref="Sentence"/> following the current one and if it's completed.
+	/// </summary>
+	public bool CanMoveNext =>
+		!IsCurrentSentenceFinal &&
+		CurrentSentenceIndex < _Sentences.Count &&
+		_Sentences.Last().IsCompleted;
+
+	/// <summary>
+	/// Wheter there's a <see cref="Sentence"/> before the current one.
+	/// </summary>
+	public bool CanMovePrevious =>
+		CurrentSentenceIndex > 0;
+
+	public Sentence NextSentence()
+	{
+		if (!CanMoveNext)
+			throw new InvalidOperationException("Cannot move to the next sentence.");
+
+		CurrentSentenceIndex++;
+		return CurrentSentence;
+	}
+
+	public Sentence PreviousSentence()
+	{
+		if (!CanMovePrevious)
+			throw new InvalidOperationException("Cannot move to the previous sentence.");
+		CurrentSentenceIndex--;
+		return CurrentSentence;
+	}
+
+	#endregion
+
 	#region Completation
 	public bool IsCompleted { get; private set; }
 
