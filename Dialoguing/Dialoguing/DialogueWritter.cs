@@ -66,7 +66,7 @@ public class DialogueWritter
                 sentenceToMark.MarkAsCompleted();
                 OnSentenceFinalized?.Invoke(sentenceToMark);
             }
-            ActiveDialogue.Sentences.Add(new Sentence(newSentences[i]));
+            ActiveDialogue.AddSentence(new Sentence(newSentences[i]));
         }
 
         CurrentSentences = newSentences;
