@@ -42,12 +42,16 @@ public class Dialogue
 	public bool CanMovePrevious =>
 		CurrentSentenceIndex > 0;
 
+	public event EventHandler? MovedNext;
+	public event EventHandler? MovedPrevious;
+
 	public Sentence NextSentence()
 	{
 		if (!CanMoveNext)
 			throw new InvalidOperationException("Cannot move to the next sentence.");
 
 		CurrentSentenceIndex++;
+		MovedNext?.Invoke(this, EventArgs.Empty);
 		return CurrentSentence;
 	}
 
@@ -55,7 +59,9 @@ public class Dialogue
 	{
 		if (!CanMovePrevious)
 			throw new InvalidOperationException("Cannot move to the previous sentence.");
+
 		CurrentSentenceIndex--;
+		MovedPrevious?.Invoke(this, EventArgs.Empty);
 		return CurrentSentence;
 	}
 
